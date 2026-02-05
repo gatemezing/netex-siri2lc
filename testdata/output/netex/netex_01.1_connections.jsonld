@@ -1,0 +1,11 @@
+{
+  "@context": {
+    "lc": "http://semweb.mmlab.be/ns/linkedconnections#",
+    "netex": "http://data.europa.eu/949/",
+    "gtfs": "http://vocab.gtfs.org/terms#",
+    "siri": "http://www.siri.org.uk/siri#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "geo": "http://www.w3.org/2003/01/geo/wgs84_pos#"
+  },
+  "@graph": []
+}

@@ -1,0 +1,72 @@
+{
+  "@context": {
+    "lc": "http://semweb.mmlab.be/ns/linkedconnections#",
+    "netex": "http://data.europa.eu/949/",
+    "gtfs": "http://vocab.gtfs.org/terms#",
+    "siri": "http://www.siri.org.uk/siri#",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "geo": "http://www.w3.org/2003/01/geo/wgs84_pos#"
+  },
+  "@graph": [
+    {
+      "@id": "http://transport.example.org/connections/20011217/00008/1",
+      "@type": "lc:Connection",
+      "lc:departureStop": {
+        "@id": "http://transport.example.org/stops/00001"
+      },
+      "lc:arrivalStop": {
+        "@id": "http://transport.example.org/stops/00002"
+      },
+      "lc:departureTime": {
+        "@value": "2001-12-17T09:30:47-05:00",
+        "@type": "xsd:dateTime"
+      },
+      "lc:arrivalTime": {
+        "@value": "2001-12-17T09:30:47-05:00",
+        "@type": "xsd:dateTime"
+      },
+      "netex:line": {
+        "@id": "http://transport.example.org/lines/LZ123"
+      },
+      "netex:serviceJourney": {
+        "@id": "http://transport.example.org/journeys/00008"
+      },
+      "lc:arrivalDelay": {
+        "@value": "0",
+        "@type": "xsd:integer"
+      }
+    },
+    {
+      "@id": "http://transport.example.org/connections/20011217/00008/2",
+      "@type": "lc:Connection",
+      "lc:departureStop": {
+        "@id": "http://transport.example.org/stops/00002"
+      },
+      "lc:arrivalStop": {
+        "@id": "http://transport.example.org/stops/00003"
+      },
+      "lc:departureTime": {
+        "@value": "2001-12-17T09:30:47-05:00",
+        "@type": "xsd:dateTime"
+      },
+      "lc:arrivalTime": {
+        "@value": "2001-12-17T09:30:47-05:00",
+        "@type": "xsd:dateTime"
+      },
+      "netex:line": {
+        "@id": "http://transport.example.org/lines/LZ123"
+      },
+      "netex:serviceJourney": {
+        "@id": "http://transport.example.org/journeys/00008"
+      },
+      "lc:departureDelay": {
+        "@value": "0",
+        "@type": "xsd:integer"
+      },
+      "lc:arrivalDelay": {
+        "@value": "0",
+        "@type": "xsd:integer"
+      }
+    }
+  ]
+}
