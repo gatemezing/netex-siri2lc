@@ -7,5 +7,102 @@
     "xsd": "http://www.w3.org/2001/XMLSchema#",
     "geo": "http://www.w3.org/2003/01/geo/wgs84_pos#"
   },
-  "@graph": []
+  "@graph": [
+    {
+      "@id": "http://transport.example.org/connections/00000000/acs:sj_24o_01/1",
+      "@type": "lc:Connection",
+      "lc:departureStop": {
+        "@id": "http://transport.example.org/stops/mybus:SSP_001"
+      },
+      "lc:arrivalStop": {
+        "@id": "http://transport.example.org/stops/mybus:SSP_002"
+      },
+      "lc:departureTime": {
+        "@value": "14:20:00.0Z",
+        "@type": "xsd:dateTime"
+      },
+      "lc:arrivalTime": {
+        "@value": "14:30:00.0Z",
+        "@type": "xsd:dateTime"
+      },
+      "netex:line": {
+        "@id": "http://transport.example.org/lines/mybus:LN_24"
+      },
+      "netex:serviceJourney": {
+        "@id": "http://transport.example.org/journeys/acs:sj_24o_01"
+      }
+    },
+    {
+      "@id": "http://transport.example.org/connections/00000000/acs:sj_24o_01/2",
+      "@type": "lc:Connection",
+      "lc:departureStop": {
+        "@id": "http://transport.example.org/stops/mybus:SSP_002"
+      },
+      "lc:arrivalStop": {
+        "@id": "http://transport.example.org/stops/mybus:SSP_077"
+      },
+      "lc:departureTime": {
+        "@value": "14:32:00.0Z",
+        "@type": "xsd:dateTime"
+      },
+      "lc:arrivalTime": {
+        "@value": "15:10:00.0Z",
+        "@type": "xsd:dateTime"
+      },
+      "netex:line": {
+        "@id": "http://transport.example.org/lines/mybus:LN_24"
+      },
+      "netex:serviceJourney": {
+        "@id": "http://transport.example.org/journeys/acs:sj_24o_01"
+      }
+    },
+    {
+      "@id": "http://transport.example.org/connections/00000000/acs:sj_24o_02/1",
+      "@type": "lc:Connection",
+      "lc:departureStop": {
+        "@id": "http://transport.example.org/stops/mybus:SSP_001"
+      },
+      "lc:arrivalStop": {
+        "@id": "http://transport.example.org/stops/mybus:SSP_002"
+      },
+      "lc:departureTime": {
+        "@value": "15:20:00.0Z",
+        "@type": "xsd:dateTime"
+      },
+      "lc:arrivalTime": {
+        "@value": "15:30:00.0Z",
+        "@type": "xsd:dateTime"
+      },
+      "netex:line": {
+        "@id": "http://transport.example.org/lines/mybus:LN_24"
+      },
+      "netex:serviceJourney": {
+        "@id": "http://transport.example.org/journeys/acs:sj_24o_02"
+      }
+    },
+    {
+      "@id": "http://transport.example.org/connections/00000000/acs:sj_24o_02/2",
+      "@type": "lc:Connection",
+      "lc:departureStop": {
+        "@id": "http://transport.example.org/stops/mybus:SSP_002"
+      },
+      "lc:arrivalStop": {
+        "@id": "http://transport.example.org/stops/mybus:SSP_077"
+      },
+      "lc:departureTime": {
+        "@value": "15:32:00.0Z",
+        "@type": "xsd:dateTime"
+      },
+      "lc:arrivalTime": {
+        "@value": "16:10:00.0Z",
+        "@type": "xsd:dateTime"
+      },
+      "netex:line": {
+        "@id": "http://transport.example.org/lines/mybus:LN_24"
+      },
+      "netex:serviceJourney": {
+        "@id": "http://transport.example.org/journeys/acs:sj_24o_02"
+      }
+    }
+  ]
 }

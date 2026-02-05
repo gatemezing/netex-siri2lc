@@ -106,7 +106,55 @@ def _extract_passing_times(service_journey) -> List[PassingTime]:
             )
         )
 
+    if times:
+        return times
+    return _extract_call_times(service_journey)
+
+
+def _extract_call_times(service_journey) -> List[PassingTime]:
+    times: List[PassingTime] = []
+
+    for call in service_journey.iter():
+        if local_name(call.tag) != "Call":
+            continue
+        order_text = call.get("order") or find_text(call, ["Order", "SequenceNumber"])
+        sequence = int(order_text) if order_text and order_text.isdigit() else None
+        stop_ref = find_ref(call, STOP_REF_TAGS)
+        if not stop_ref:
+            continue
+
+        arrival_time = _find_call_time(call, "Arrival")
+        departure_time = _find_call_time(call, "Departure")
+
+        times.append(
+            PassingTime(
+                sequence=sequence,
+                stop_ref=stop_ref,
+                departure_time=departure_time,
+                arrival_time=arrival_time,
+            )
+        )
+
     return times
+
+
+def _find_call_time(call, name: str) -> Optional[str]:
+    for child in call.iter():
+        if local_name(child.tag) != name:
+            continue
+        value = find_text(
+            child,
+            [
+                "Time",
+                "ArrivalTime",
+                "DepartureTime",
+                "AimedArrivalTime",
+                "AimedDepartureTime",
+            ],
+        )
+        if value:
+            return value
+    return None
 
 
 def _sort_passing_times(passing_times: List[PassingTime]) -> List[PassingTime]:

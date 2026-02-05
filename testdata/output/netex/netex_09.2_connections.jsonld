@@ -7,5 +7,90 @@
     "xsd": "http://www.w3.org/2001/XMLSchema#",
     "geo": "http://www.w3.org/2003/01/geo/wgs84_pos#"
   },
-  "@graph": []
+  "@graph": [
+    {
+      "@id": "http://transport.example.org/connections/00000000/ao:K66_outbound_01/1",
+      "@type": "lc:Connection",
+      "lc:departureStop": {
+        "@id": "http://transport.example.org/stops/ao:Briga-p"
+      },
+      "lc:arrivalStop": {
+        "@id": "http://transport.example.org/stops/ao:Banjaloka-p"
+      },
+      "lc:departureTime": {
+        "@value": "14:00:00.0Z",
+        "@type": "xsd:dateTime"
+      },
+      "lc:arrivalTime": {
+        "@value": "14:30:00.0Z",
+        "@type": "xsd:dateTime"
+      },
+      "netex:serviceJourney": {
+        "@id": "http://transport.example.org/journeys/ao:K66_outbound_01"
+      }
+    },
+    {
+      "@id": "http://transport.example.org/connections/00000000/ao:K66_outbound_01/2",
+      "@type": "lc:Connection",
+      "lc:departureStop": {
+        "@id": "http://transport.example.org/stops/ao:Banjaloka-p"
+      },
+      "lc:arrivalStop": {
+        "@id": "http://transport.example.org/stops/ao:NovaSela-p"
+      },
+      "lc:departureTime": {
+        "@value": "14:32:00.0Z",
+        "@type": "xsd:dateTime"
+      },
+      "lc:arrivalTime": {
+        "@value": "15:10:00.0Z",
+        "@type": "xsd:dateTime"
+      },
+      "netex:serviceJourney": {
+        "@id": "http://transport.example.org/journeys/ao:K66_outbound_01"
+      }
+    },
+    {
+      "@id": "http://transport.example.org/connections/00000000/ao:K66_inbound_02/1",
+      "@type": "lc:Connection",
+      "lc:departureStop": {
+        "@id": "http://transport.example.org/stops/ao:Briga-p"
+      },
+      "lc:arrivalStop": {
+        "@id": "http://transport.example.org/stops/ao:Banjaloka-p"
+      },
+      "lc:departureTime": {
+        "@value": "15:00:00.0Z",
+        "@type": "xsd:dateTime"
+      },
+      "lc:arrivalTime": {
+        "@value": "15:30:00.0Z",
+        "@type": "xsd:dateTime"
+      },
+      "netex:serviceJourney": {
+        "@id": "http://transport.example.org/journeys/ao:K66_inbound_02"
+      }
+    },
+    {
+      "@id": "http://transport.example.org/connections/00000000/ao:K66_inbound_02/2",
+      "@type": "lc:Connection",
+      "lc:departureStop": {
+        "@id": "http://transport.example.org/stops/ao:Banjaloka-p"
+      },
+      "lc:arrivalStop": {
+        "@id": "http://transport.example.org/stops/ao:NovaSela-p"
+      },
+      "lc:departureTime": {
+        "@value": "15:32:00.0Z",
+        "@type": "xsd:dateTime"
+      },
+      "lc:arrivalTime": {
+        "@value": "16:10:00.0Z",
+        "@type": "xsd:dateTime"
+      },
+      "netex:serviceJourney": {
+        "@id": "http://transport.example.org/journeys/ao:K66_inbound_02"
+      }
+    }
+  ]
 }
