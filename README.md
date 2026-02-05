@@ -42,3 +42,7 @@ python -m siri2lc \
 - Add fragmenting and server mode.
 - Expand SIRI profiles (VM, SX).
 - Improve NeTEx coverage (SiteFrame/ServiceFrame metadata).
+
+## References
+- https://github.com/gatemezing/merits-edifact/
+- https://github.com/linkedconnections/gtfs2lc
