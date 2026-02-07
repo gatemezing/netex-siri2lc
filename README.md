@@ -225,7 +225,7 @@ pytest -v
 ## References
 
 - [Linked Connections Specification](https://linkedconnections.org/specification/1-0)
-- [NeTEx RDF Ontology](http://data.europa.eu/949/)
+- [ERA NeTEx RDF Ontology](http://data.europa.eu/949/)
 - [GTFS2LC](https://github.com/linkedconnections/gtfs2lc)
 - [NeTEx Standard](https://netex-cen.eu/)
 - [SIRI Standard](http://www.siri-cen.eu/)
@@ -233,3 +233,6 @@ pytest -v
 ## License
 
 MIT
+
+## Profile examples
+- https://github.com/entur/profile-examples
