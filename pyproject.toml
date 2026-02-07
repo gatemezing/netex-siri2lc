@@ -1,0 +1,66 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "netex-siri2lc"
+version = "0.1.0"
+description = "Convert NeTEx and SIRI XML to Linked Connections JSON-LD/RDF"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.9"
+authors = [
+    {name = "Transit Data Working Group"}
+]
+keywords = ["netex", "siri", "linked-connections", "transit", "rdf", "json-ld"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: GIS",
+]
+
+dependencies = [
+    "click>=8.0",
+    "lxml>=4.9",
+    "rdflib>=6.0",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "black>=23.0",
+    "ruff>=0.1.0",
+]
+
+[project.scripts]
+netex2lc = "netex2lc.cli:main"
+siri2lc = "siri2lc.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/netex-linked-connections/netex2lc"
+Repository = "https://github.com/netex-linked-connections/netex2lc"
+
+[tool.setuptools.packages.find]
+include = ["netex2lc*", "siri2lc*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-v --tb=short"
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+
+[tool.black]
+line-length = 100
+target-version = ["py39"]
