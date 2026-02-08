@@ -17,11 +17,17 @@ from benchmark import (
     validate_jsonld,
     validate_uris,
     validate_datetimes,
+    validate_vm_uris,
+    validate_sx_uris,
+    validate_vm_jsonld,
+    validate_sx_jsonld,
     benchmark_netex_file,
     benchmark_siri_file,
 )
 from netex2lc.models import Connection
 from netex2lc.uri import URIStrategy
+from siri2lc.siri_vm_parser import VehiclePosition
+from siri2lc.siri_sx_parser import ServiceAlert, AffectedStop, AffectedLine
 
 
 @pytest.fixture
@@ -211,6 +217,112 @@ class TestBenchmarkNetexFile:
         assert result.file_size_kb > 0
 
 
+class TestValidateVmUris:
+    """Tests for validate_vm_uris function."""
+
+    def test_valid_vm_uris(self):
+        """Test valid URIs in vehicle positions."""
+        uri_strategy = URIStrategy(base_uri="http://test.example.org")
+        positions = [
+            VehiclePosition(
+                vehicle_id="V001",
+                recorded_at="2026-02-08T10:00:00+00:00",
+                latitude=59.9,
+                longitude=10.7,
+                bearing=None,
+                speed=None,
+                delay=None,
+                progress_rate=None,
+                line_ref="L1",
+                journey_ref="J1",
+                operator_ref=None,
+                origin_name=None,
+                destination_name=None,
+                destination_ref=None,
+                monitored=True,
+                in_congestion=False,
+                current_stop_ref=None,
+                next_stop_ref=None,
+                occupancy=None,
+            )
+        ]
+        assert validate_vm_uris(positions, uri_strategy) is True
+
+    def test_vm_jsonld_valid(self):
+        """Test JSON-LD validation for VM."""
+        uri_strategy = URIStrategy(base_uri="http://test.example.org")
+        positions = [
+            VehiclePosition(
+                vehicle_id="V001",
+                recorded_at="2026-02-08T10:00:00+00:00",
+                latitude=59.9,
+                longitude=10.7,
+                bearing=None,
+                speed=None,
+                delay=None,
+                progress_rate=None,
+                line_ref=None,
+                journey_ref=None,
+                operator_ref=None,
+                origin_name=None,
+                destination_name=None,
+                destination_ref=None,
+                monitored=True,
+                in_congestion=False,
+                current_stop_ref=None,
+                next_stop_ref=None,
+                occupancy=None,
+            )
+        ]
+        assert validate_vm_jsonld(positions, uri_strategy) is True
+
+
+class TestValidateSxUris:
+    """Tests for validate_sx_uris function."""
+
+    def test_valid_sx_uris(self):
+        """Test valid URIs in service alerts."""
+        uri_strategy = URIStrategy(base_uri="http://test.example.org")
+        alerts = [
+            ServiceAlert(
+                situation_number="SIT001",
+                creation_time="2026-02-08T10:00:00+00:00",
+                participant_ref=None,
+                version=None,
+                progress=None,
+                severity="normal",
+                summary="Test alert",
+                description="Test description",
+                reason=None,
+                validity_start=None,
+                validity_end=None,
+                affected_stops=[AffectedStop(stop_ref="STOP1")],
+                affected_lines=[AffectedLine(line_ref="LINE1")],
+            )
+        ]
+        assert validate_sx_uris(alerts, uri_strategy) is True
+
+    def test_sx_jsonld_valid(self):
+        """Test JSON-LD validation for SX."""
+        uri_strategy = URIStrategy(base_uri="http://test.example.org")
+        alerts = [
+            ServiceAlert(
+                situation_number="SIT001",
+                creation_time="2026-02-08T10:00:00+00:00",
+                participant_ref=None,
+                version=None,
+                progress=None,
+                severity="normal",
+                summary="Test alert",
+                description=None,
+                reason=None,
+                validity_start=None,
+                validity_end=None,
+            )
+        ]
+        assert validate_sx_jsonld(alerts, uri_strategy) is True
+
+
 class TestBenchmarkSiriFile:
     """Tests for benchmark_siri_file function."""
 
@@ -230,6 +342,9 @@ class TestBenchmarkSiriFile:
         assert result.format_type == "siri"
         assert result.siri_profile == "vm"
         assert result.vehicles_count >= 0
+        # Verify URI validation was performed
+        if result.vehicles_count > 0:
+            assert result.uri_valid is True
 
     def test_benchmark_siri_sx(self, siri_sx_response_path):
         """Test benchmarking a SIRI-SX file."""
@@ -239,3 +354,6 @@ class TestBenchmarkSiriFile:
         assert result.format_type == "siri"
         assert result.siri_profile == "sx"
         assert result.alerts_count >= 0
+        # Verify URI validation was performed
+        if result.alerts_count > 0:
+            assert result.uri_valid is True

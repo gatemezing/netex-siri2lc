@@ -278,6 +278,75 @@ def validate_uris(connections: List) -> bool:
         return False
 
 
+def validate_vm_uris(positions: List, uri_strategy: URIStrategy) -> bool:
+    """Validate URI format in vehicle positions via JSON-LD output."""
+    try:
+        for pos in positions:
+            jsonld = pos.to_jsonld(uri_strategy)
+            # Check @id is a valid HTTP URI
+            if not jsonld.get("@id", "").startswith("http"):
+                return False
+            # Check line ref if present
+            if "netex:line" in jsonld:
+                if not jsonld["netex:line"].get("@id", "").startswith("http"):
+                    return False
+            # Check journey ref if present
+            if "netex:serviceJourney" in jsonld:
+                if not jsonld["netex:serviceJourney"].get("@id", "").startswith("http"):
+                    return False
+            # Check stop refs if present
+            for stop_key in ["siri:destinationRef", "siri:currentStopPoint", "siri:nextStopPoint"]:
+                if stop_key in jsonld:
+                    if not jsonld[stop_key].get("@id", "").startswith("http"):
+                        return False
+        return True
+    except Exception:
+        return False
+
+
+def validate_sx_uris(alerts: List, uri_strategy: URIStrategy) -> bool:
+    """Validate URI format in service alerts via JSON-LD output."""
+    try:
+        for alert in alerts:
+            jsonld = alert.to_jsonld(uri_strategy)
+            # Check @id is a valid HTTP URI
+            if not jsonld.get("@id", "").startswith("http"):
+                return False
+            # Check affected stops
+            if "siri:affectedStopPoints" in jsonld:
+                for stop in jsonld["siri:affectedStopPoints"]:
+                    if not stop.get("@id", "").startswith("http"):
+                        return False
+            # Check affected lines
+            if "siri:affectedLines" in jsonld:
+                for line in jsonld["siri:affectedLines"]:
+                    if not line.get("@id", "").startswith("http"):
+                        return False
+        return True
+    except Exception:
+        return False
+
+
+def validate_vm_jsonld(positions: List, uri_strategy: URIStrategy) -> bool:
+    """Validate JSON-LD structure for vehicle positions."""
+    try:
+        from siri2lc.siri_vm_parser import to_jsonld
+        data = to_jsonld(positions, uri_strategy)
+        return validate_jsonld(data)
+    except Exception:
+        return False
+
+
+def validate_sx_jsonld(alerts: List, uri_strategy: URIStrategy) -> bool:
+    """Validate JSON-LD structure for service alerts."""
+    try:
+        from siri2lc.siri_sx_parser import to_jsonld
+        data = to_jsonld(alerts, uri_strategy)
+        return validate_jsonld(data)
+    except Exception:
+        return False
+
+
 def validate_datetimes(connections: List) -> bool:
     """Validate datetime format in connections."""
     try:
@@ -401,7 +470,12 @@ def benchmark_siri_file(file_path: Path, uri_strategy: URIStrategy) -> Benchmark
                 vm_fields = ["latitude", "longitude", "line_ref", "journey_ref"]
                 field_counts = {f: sum(1 for p in positions if getattr(p, f, None)) for f in vm_fields}
                 result.completeness_score = sum(field_counts.values()) / (len(vm_fields) * len(positions))
-                result.jsonld_valid = True  # VM has custom JSON-LD
+                # Validate JSON-LD and URIs using uri_strategy
+                result.jsonld_valid = validate_vm_jsonld(positions, uri_strategy)
+                result.uri_valid = validate_vm_uris(positions, uri_strategy)
+                result.datetime_valid = all(
+                    "T" in p.recorded_at for p in positions if p.recorded_at
+                )
 
         elif profile == "sx":
             alerts = parse_siri_sx(str(file_path), uri_strategy)
@@ -413,7 +487,12 @@ def benchmark_siri_file(file_path: Path, uri_strategy: URIStrategy) -> Benchmark
                 sx_fields = ["summary", "description", "severity"]
                 field_counts = {f: sum(1 for a in alerts if getattr(a, f, None)) for f in sx_fields}
                 result.completeness_score = sum(field_counts.values()) / (len(sx_fields) * len(alerts))
-                result.jsonld_valid = True  # SX has custom JSON-LD
+                # Validate JSON-LD and URIs using uri_strategy
+                result.jsonld_valid = validate_sx_jsonld(alerts, uri_strategy)
+                result.uri_valid = validate_sx_uris(alerts, uri_strategy)
+                result.datetime_valid = all(
+                    "T" in a.creation_time for a in alerts if a.creation_time
+                )
 
     except Exception as e:
         result.parse_error = str(e)

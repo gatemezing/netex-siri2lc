@@ -222,6 +222,32 @@ pytest --cov=netex2lc --cov=siri2lc
 pytest -v
 ```
 
+## Benchmarking
+
+Run benchmarks against local test data and Entur profile examples:
+
+```bash
+# Full benchmark
+python benchmarks/benchmark.py -o results.json --csv results.csv
+
+# Local test data only
+python benchmarks/benchmark.py --local-only
+
+# Entur examples only
+python benchmarks/benchmark.py --entur-only
+
+# Generate visualization charts
+python benchmarks/visualize.py results.csv -o charts/
+```
+
+See [benchmarks/METRICS.md](benchmarks/METRICS.md) for evaluation criteria.
+
+## Documentation
+
+- [Benefits for Entur Profile Developers](docs/ENTUR_BENEFITS.md) - Why use these tools with Entur profiles
+- [Benchmark Metrics](benchmarks/METRICS.md) - Evaluation criteria and methodology
+- [Results Template](benchmarks/RESULTS_TEMPLATE.md) - Expected benchmark outputs
+
 ## References
 
 - [Linked Connections Specification](https://linkedconnections.org/specification/1-0)
