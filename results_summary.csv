@@ -1,0 +1,12 @@
+metric,value
+total_files,31
+netex_files,13
+siri_files,18
+parse_success_rate,80.65
+avg_parse_time_ms,3.75
+avg_memory_mb,0.0453
+total_connections,62
+total_vehicles,4
+total_alerts,4
+avg_completeness,30.07
+jsonld_valid_rate,56.0
